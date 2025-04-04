@@ -1,0 +1,37 @@
+﻿@model WebAPP.Models.ReservationVM
+
+@{
+    ViewData["Title"] = "Reservation Confirmation";
+}
+
+<h2>Reservation Confirmed</h2>
+
+<div class="alert alert-success" role="alert">
+    Your reservation has been successfully created!
+</div>
+
+<div>
+    <h4>Reservation Details:</h4>
+    <dl class="row">
+        <dt class="col-sm-3">Property:</dt>
+        <dd class="col-sm-9">@Model.PropertyName</dd>
+
+        <dt class="col-sm-3">Username:</dt>
+        <dd class="col-sm-9">@Model.Username</dd>
+
+        <dt class="col-sm-3">Check-In Date:</dt>
+        <dd class="col-sm-9">@Model.CheckIn.Value.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">Check-Out Date:</dt>
+        <dd class="col-sm-9">@Model.CheckOut.Value.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">Number of Days:</dt>
+        <dd class="col-sm-9">@Model.NumberOfDays</dd>
+
+        <dt class="col-sm-3">Total Price:</dt>
+        <dd class="col-sm-9">@Model.TotalPrice.ToString()</dd>
+    </dl>
+</div>
+
+<a asp-controller="Property" asp-action="Details" asp-route-id="@Model.PropertyID" class="btn btn-primary mt-3">Back to property</a>
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary mt-3">Return to Home</a>

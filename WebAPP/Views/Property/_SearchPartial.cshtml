@@ -1,0 +1,116 @@
+﻿@model SearchVM
+
+<style>
+    .container {
+        padding-top: 10px;
+    }
+
+    .border {
+        border: 1px solid #dee2e6; /* Light grey border color */
+    }
+
+    .p-3 {
+        padding: 1rem; /* Adjust padding as needed */
+    }
+
+    .rounded {
+        border-radius: 0.25rem; /* Adjust border radius as needed */
+    }
+
+    .d-flex {
+        display: flex; /* Flexbox for horizontal alignment */
+    }
+
+    .align-items-center {
+        align-items: center; /* Center items vertically within the container */
+    }
+
+    .flex-grow-1 {
+        flex-grow: 1; /* Allow flex items to grow and take up available space */
+    }
+
+    .ms-auto {
+        margin-left: auto; /* Pushes the item to the far right */
+    }
+
+    .me-2 {
+        margin-end: 0.5rem; /* Margin-end for spacing between buttons */
+    }
+
+    .btn-sm {
+        font-size: 0.875rem; /* Smaller button font size */
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.Properties)
+        {
+            <div class="col-md-12 mb-3">
+                <div class="border p-3 rounded d-flex align-items-center">
+                    <!-- Property Details -->
+                    <div class="d-flex flex-grow-1 me-3">
+                        <div class="me-3">
+                            <h4 class="mb-0">@item.Name</h4>
+                        </div>
+                        <div class="me-3">
+                            <h4 class="mb-0">@item.PropertyTypeName</h4>
+                        </div>
+                        <div class="me-3">
+                            <p class="mb-0">City: @item.City</p>
+                        </div>
+                        <div class="me-3">
+                            <p class="mb-0">Country: @item.Country</p>
+                        </div>
+                        <div class="me-3">
+                            <p class="mb-0">Guests: @item.MaxGuests</p>
+                        </div>
+                        <div class="me-3">
+                            <p class="mb-0">Price: @item.PricePerNight</p>
+                        </div>
+                    </div>
+
+                    <div class="ms-auto">
+                        @Html.ActionLink("Details", "Details", new { id = item.PropertyId }, new { @class = "btn btn-outline-primary" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        @for (int i = Model.FromPager; i <= Model.ToPager; i++)
+        {
+            var linkText = i.ToString();
+            if (i != 1 && i == Model.FromPager)
+            {
+                linkText = "«";
+            }
+            else if (i != Model.LastPage && i == Model.ToPager)
+            {
+                linkText = "»";
+            }
+
+            var linkClass = "page-item";
+            if (i == Model.Page)
+            {
+                linkClass = "page-item active";
+            }
+            <li class="@linkClass">
+                @Html.ActionLink(
+                         linkText,
+                         "Search",
+                         new
+                         {
+                             x = Model.X,
+                             orderby = Model.OrderBy,
+                             page = i,
+                             size = Model.Size
+                         },
+                         new { @class = "page-link" })
+            </li>
+        }
+    </ul>
+</nav>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebAPP.Models.PropertyAmenityVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Property Amenity</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PropertyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmenityName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PropertyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmenityName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PropertyAmenityId }, new { @class = "btn btn-outline-primary" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PropertyAmenityId }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

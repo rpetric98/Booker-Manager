@@ -1,0 +1,113 @@
+﻿@model WebAPP.Models.PropertyVM
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+
+    .amenities-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .amenity-item {
+        position: relative;
+        padding-right: 10px;
+    }
+
+        .amenity-item::after {
+            content: "|";
+            position: absolute;
+            right: 0;
+        }
+
+        .amenity-item:last-child::after {
+            content: "";
+        }
+
+    .container h2 {
+        font-weight: bold;
+    }
+
+    .border {
+        border-color: #007bff;
+    }
+
+    .btn-outline-primary {
+        margin-right: 10px;
+    }
+
+</style>
+
+<h1>Property details</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>@Model.Name</h2>
+            <h4 class="text-muted">@Model.PropertyTypeName</h4>
+            <div class="mt-3 mb-3">
+                <img alt="Property Image" class="img-fluid rounded">
+            </div>
+            <p class="mt-3"><strong>Description:</strong> @Model.Description</p>
+        </div>
+
+        <div class="col-md-6">
+            <div class="border rounded p-4 bg-light">
+                <h4>Additional Information</h4>
+                <dl class="row">
+                    <dt class="col-sm-5">@Html.DisplayNameFor(model => model.Address)</dt>
+                    <dd class="col-sm-7">@Html.DisplayFor(model => model.Address)</dd>
+
+                    <dt class="col-sm-5">@Html.DisplayNameFor(model => model.City)</dt>
+                    <dd class="col-sm-7">@Html.DisplayFor(model => model.City)</dd>
+
+                    <dt class="col-sm-5">@Html.DisplayNameFor(model => model.ZipCode)</dt>
+                    <dd class="col-sm-7">@Html.DisplayFor(model => model.ZipCode)</dd>
+
+                    <dt class="col-sm-5">@Html.DisplayNameFor(model => model.Country)</dt>
+                    <dd class="col-sm-7">@Html.DisplayFor(model => model.Country)</dd>
+
+                    <dt class="col-sm-5">@Html.DisplayNameFor(model => model.PricePerNight)</dt>
+                    <dd class="col-sm-7">@Html.DisplayFor(model => model.PricePerNight)</dd>
+
+                    <dt class="col-sm-5">@Html.DisplayNameFor(model => model.MaxGuests)</dt>
+                    <dd class="col-sm-7">@Html.DisplayFor(model => model.MaxGuests)</dd>
+
+                    <dt class="col-sm-5">Amenities</dt>
+                    <dd class="col-sm-7">
+                        @if (Model.AmenityIds != null && Model.AmenityIds.Any())
+                        {
+                            <div class="amenities-list">
+                                @foreach (var amenityId in Model.AmenityIds)
+                                {
+                                    var amenity = Model.Amenities.FirstOrDefault(x => x.AmenityId == amenityId);
+                                    if (amenity != null)
+                                    {
+                                        <span class="amenity-item">@amenity.AmenityName</span>
+                                    }
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <p>No amenities available.</p>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <a asp-controller="Reservation" asp-action="Create"
+               asp-route-propertyId="@Model.PropertyId" class="btn btn-primary">
+                Reserve
+            </a>
+            <a asp-controller="Property" asp-action="Search" class="btn btn-outline-primary">Back</a>
+        </div>
+    </div>
+</div>
